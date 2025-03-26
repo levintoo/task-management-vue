@@ -1,8 +1,9 @@
 <script setup>
 import { toast } from 'vue-sonner'
 import { ref } from 'vue'
-import { useAuthStore } from '@/stores/auth.js'
+import { useAuthStore } from '@/stores/useAuthStore.js'
 import router from '@/router/index.js'
+import { extractErrorMessage } from '@/utils/error-handler.js'
 
 const form = ref({
   email: '',
@@ -18,7 +19,8 @@ const login = async () => {
     await auth.login(form.value)
     await router.push({ name: 'dashboard' })
   } catch (error) {
-    toast.error(error.response.data.message)
+    const message = extractErrorMessage(error)
+    toast.error(message)
     if (error.response && error.response.status === 422) {
       validationErrors.value = error.response.data.errors
     }

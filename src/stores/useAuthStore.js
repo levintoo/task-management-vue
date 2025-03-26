@@ -3,11 +3,12 @@ import axios from '@/utils/axios.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null,
+    user: [],
   }),
 
   getters: {
     isAuthenticated: (state) => !!state.user,
+    isAdmin: (state) => state.user.role === 'ADMIN',
   },
 
   actions: {
@@ -22,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
 
     async fetchUser() {
       const response = await axios.get('/api/user')
-      this.user = response.data
+      this.user = response.data.data
       return response
     },
 

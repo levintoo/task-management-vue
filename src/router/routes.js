@@ -2,6 +2,8 @@ import HomeView from '@/views/HomeView.vue'
 
 const DashboardView = () => import('../views/DashboardView.vue')
 const LoginView = () => import('../views/LoginView.vue')
+const AdminDashboardView = () => import('../views/admin/DashboardView.vue')
+const NotFoundView = () => import('../views/ErrorView.vue')
 
 export default [
   {
@@ -14,7 +16,7 @@ export default [
     name: 'login',
     component: LoginView,
     meta: {
-      guard: 'guest',
+      guard: ['guest'],
     },
   },
   {
@@ -22,7 +24,23 @@ export default [
     name: 'dashboard',
     component: DashboardView,
     meta: {
-      guard: 'auth',
+      guard: ['auth'],
+    },
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminDashboardView,
+    meta: {
+      guard: ['auth', 'admin'],
+    },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: NotFoundView,
+    props: {
+      status: 404,
     },
   },
 ]

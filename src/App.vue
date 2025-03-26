@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import { Toaster } from 'vue-sonner'
-import { useAuthStore } from '@/stores/auth.js'
+import { useAuthStore } from '@/stores/useAuthStore.js'
 import router from '@/router/index.js'
 
 const auth = useAuthStore()
@@ -20,6 +20,7 @@ const logout = async () => {
       <RouterLink class="hover:underline text-blue-700" to="/">Home</RouterLink>
       <RouterLink class="hover:underline text-blue-700" to="/login">Login</RouterLink>
       <RouterLink class="hover:underline text-blue-700" to="/dashboard">Dashboard</RouterLink>
+      <RouterLink class="hover:underline text-blue-700" to="/admin">Admin</RouterLink>
       <button class="hover:underline text-blue-700" @click="logout()">Logout</button>
     </nav>
   </header>
