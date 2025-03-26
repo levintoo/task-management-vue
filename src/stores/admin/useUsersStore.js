@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from '@/utils/axios.js'
+import axios from '@/lib/axios.js'
 
 export const useAdminUsersStore = defineStore('admin_users', {
   state: () => ({

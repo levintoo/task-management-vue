@@ -2,7 +2,7 @@
 import { useAuthStore } from '@/stores/useAuthStore.js'
 import { useAdminUsersStore } from '@/stores/admin/useUsersStore.js'
 import { onBeforeMount } from 'vue'
-import { extractErrorMessage } from '@/utils/error-handler.js'
+import { extractErrorMessage } from '@/lib/error-handler.js'
 import { toast } from 'vue-sonner'
 
 const auth = useAuthStore()

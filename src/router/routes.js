@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 const DashboardView = () => import('../views/DashboardView.vue')
 const LoginView = () => import('../views/LoginView.vue')
 const AdminDashboardView = () => import('../views/admin/DashboardView.vue')
+const SidebarView = () => import('../views/SidebarView.vue')
 const NotFoundView = () => import('../views/ErrorView.vue')
 
 export default [
@@ -31,6 +32,14 @@ export default [
     path: '/admin',
     name: 'admin',
     component: AdminDashboardView,
+    meta: {
+      guard: ['auth', 'admin'],
+    },
+  },
+  {
+    path: '/sidebar',
+    name: 'sidebar',
+    component: SidebarView,
     meta: {
       guard: ['auth', 'admin'],
     },

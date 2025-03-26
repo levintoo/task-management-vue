@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from '@/utils/axios.js'
+import axios from '@/lib/axios.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -9,6 +9,12 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isAuthenticated: (state) => !!state.user,
     isAdmin: (state) => state.user.role === 'ADMIN',
+    initials: (state) => {
+      const parts = state.user.name.trim().split(/\s+/)
+      const first = parts[0]?.charAt(0) || ''
+      const second = parts.length > 1 ? parts[1].charAt(0) : parts[0]?.charAt(1) || ''
+      return (first + second).toUpperCase()
+    },
   },
 
   actions: {
