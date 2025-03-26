@@ -26,11 +26,11 @@ const { isMobile } = useSidebar()
 </script>
 
 <template>
-  <SidebarGroup class="group-data-[collapsible=icon]:hidden">
+  <SidebarGroup>
     <SidebarGroupLabel>Your Boards</SidebarGroupLabel>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in projects" :key="item.name">
-        <SidebarMenuButton as-child>
+        <SidebarMenuButton as-child :tooltip="item.name">
           <a :href="item.url">
             <component :is="item.icon" />
             <span>{{ item.name }}</span>
@@ -65,7 +65,7 @@ const { isMobile } = useSidebar()
         </DropdownMenu>
       </SidebarMenuItem>
       <SidebarMenuItem>
-        <SidebarMenuButton class="text-sidebar-foreground/70">
+        <SidebarMenuButton tooltip="More" class="text-sidebar-foreground/70">
           <MoreHorizontal class="text-sidebar-foreground/70" />
           <span>More</span>
         </SidebarMenuButton>

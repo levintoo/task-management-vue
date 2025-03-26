@@ -8,16 +8,14 @@ import {
 } from '@/components/ui/sidebar'
 
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  FileMinus2,
+  CircleEllipsis,
+  Clock,
+  House,
+  ClipboardList,
+  Users,
+  Earth,
+  Layers,
 } from 'lucide-vue-next'
 import TeamSwitcher from '@/components/TeamSwitcher.vue'
 import NavMain from '@/components/NavMain.vue'
@@ -31,67 +29,76 @@ const props = defineProps({
   class: { type: null, required: false },
 })
 
-// This is sample data.
 const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
   teams: [
     {
+      name: 'Personal Workspace',
+      plan: 'Laravel',
+      gradient: null,
+    },
+    {
       name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
       plan: 'Enterprise',
+      gradient: 2,
+    },
+    {
+      name: 'Foo Inc',
+      plan: 'Enterprise',
+      gradient: 3,
     },
     {
       name: 'Acme Corp.',
-      logo: AudioWaveform,
       plan: 'Startup',
+      gradient: 4,
     },
     {
       name: 'Evil Corp.',
-      logo: Command,
       plan: 'Free',
+      gradient: 5,
     },
   ],
   navMain: [
     {
-      title: 'Playground',
+      title: 'Docs',
       url: '#',
-      icon: SquareTerminal,
+      icon: FileMinus2,
     },
     {
-      title: 'Models',
+      title: 'Dashboard',
       url: '#',
-      icon: Bot,
+      icon: House,
     },
     {
-      title: 'Documentation',
+      title: 'Snapshots',
       url: '#',
-      icon: BookOpen,
+      icon: Clock,
     },
     {
-      title: 'Settings',
+      title: 'Clips',
       url: '#',
-      icon: Settings2,
+      icon: Layers,
+    },
+    {
+      title: 'More',
+      url: '#',
+      icon: CircleEllipsis,
     },
   ],
   projects: [
     {
-      name: 'Design Engineering',
+      name: 'Everything',
       url: '#',
-      icon: Frame,
+      icon: Earth,
     },
     {
-      name: 'Sales & Marketing',
+      name: 'Team Space',
       url: '#',
-      icon: PieChart,
+      icon: Users,
     },
     {
-      name: 'Travel',
+      name: 'Product Requirements',
       url: '#',
-      icon: Map,
+      icon: ClipboardList,
     },
   ],
 }
@@ -107,7 +114,7 @@ const data = {
       <NavProjects class="flex-1" :projects="data.projects" />
     </SidebarContent>
     <SidebarFooter>
-      <NavUser :user="data.user" />
+      <NavUser />
     </SidebarFooter>
     <SidebarRail />
   </Sidebar>

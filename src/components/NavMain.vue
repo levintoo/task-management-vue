@@ -15,7 +15,7 @@ defineProps({
   <SidebarGroup>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in items" :key="item.name">
-        <SidebarMenuButton as-child>
+        <SidebarMenuButton :tooltip="item.title" as-child>
           <a :href="item.url">
             <component :is="item.icon" />
             <span>{{ item.title }}</span>

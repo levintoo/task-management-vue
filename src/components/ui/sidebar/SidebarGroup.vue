@@ -9,7 +9,12 @@ const props = defineProps({
 <template>
   <div
     data-sidebar="group"
-    :class="cn('bg-gray-50 rounded-lg relative flex w-full min-w-0 flex-col p-2', props.class)"
+    :class="
+      cn(
+        'bg-gray-50 rounded-lg relative flex w-full min-w-0 flex-col p-2 group-data-[collapsible=icon]:bg-white',
+        props.class,
+      )
+    "
   >
     <slot />
   </div>
