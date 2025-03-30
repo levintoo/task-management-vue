@@ -18,8 +18,14 @@ import {
 } from '@/components/ui/sidebar'
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/useAuthStore.js'
+import router from '@/router/index.js'
 
 const auth = useAuthStore()
+
+const logout = async () => {
+  await auth.logout()
+  await router.push({ name: 'login' })
+}
 
 const { isMobile } = useSidebar()
 </script>
@@ -55,8 +61,8 @@ const { isMobile } = useSidebar()
                 <AvatarFallback class="rounded-lg"> {{ auth?.initials }} </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-semibold">{{ auth.user.name }}</span>
-                <span class="truncate text-xs">{{ auth.user.email }}</span>
+                <span class="truncate font-semibold">{{ auth?.user?.name }}</span>
+                <span class="truncate text-xs">{{ auth?.user?.email }}</span>
               </div>
             </div>
           </DropdownMenuLabel>
@@ -76,7 +82,7 @@ const { isMobile } = useSidebar()
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem @click="logout()">
             <LogOut />
             Log out
           </DropdownMenuItem>

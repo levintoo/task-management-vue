@@ -1,12 +1,12 @@
 <script setup>
-import { cn } from '@/lib/utils';
-import { useSidebar } from './utils';
+import { cn } from '@/lib/utils'
+import { useSidebar } from './utils'
 
 const props = defineProps({
   class: { type: null, required: false },
-});
+})
 
-const { toggleSidebar } = useSidebar();
+const { toggleSidebar } = useSidebar()
 </script>
 
 <template>

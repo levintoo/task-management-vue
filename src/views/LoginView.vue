@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/useAuthStore.js'
 import router from '@/router/index.js'
 import { extractErrorMessage } from '@/lib/error-handler.js'
+import GuestLayout from '@/views/layouts/GuestLayout.vue'
 
 const form = ref({
   email: '',
@@ -29,7 +30,7 @@ const login = async () => {
 </script>
 
 <template>
-  <div>
+  <GuestLayout>
     <h1>This is the login page</h1>
     <form class="mx-auto max-w-2xl space-y-4">
       <!-- Form Group -->
@@ -95,5 +96,5 @@ const login = async () => {
 
       <div>{{ auth.user }}</div>
     </form>
-  </div>
+  </GuestLayout>
 </template>

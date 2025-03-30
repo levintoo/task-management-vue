@@ -1,9 +1,10 @@
 import HomeView from '@/views/HomeView.vue'
 
 const DashboardView = () => import('../views/DashboardView.vue')
+const KanbanView = () => import('../views/KanbanView.vue')
 const LoginView = () => import('../views/LoginView.vue')
 const AdminDashboardView = () => import('../views/admin/DashboardView.vue')
-const SidebarView = () => import('../views/SidebarView.vue')
+const UsersView = () => import('../views/admin/UsersView.vue')
 const NotFoundView = () => import('../views/ErrorView.vue')
 
 export default [
@@ -13,36 +14,50 @@ export default [
     component: HomeView,
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LoginView,
     meta: {
       guard: ['guest'],
     },
+    children: [
+      {
+        path: '/login',
+        name: 'login',
+        component: LoginView,
+      },
+    ],
   },
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: DashboardView,
     meta: {
       guard: ['auth'],
     },
+    children: [
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: DashboardView,
+      },
+      {
+        path: '/kanban',
+        name: 'kanban',
+        component: KanbanView,
+      },
+    ],
   },
   {
-    path: '/admin',
-    name: 'admin',
-    component: AdminDashboardView,
     meta: {
       guard: ['auth', 'admin'],
     },
-  },
-  {
-    path: '/sidebar',
-    name: 'sidebar',
-    component: SidebarView,
-    meta: {
-      guard: ['auth', 'admin'],
-    },
+    children: [
+      {
+        path: '/admin',
+        name: 'admin.dashboard',
+        component: AdminDashboardView,
+      },
+      {
+        path: '/users',
+        name: 'admin.users',
+        component: UsersView,
+      },
+    ],
   },
   {
     path: '/:pathMatch(.*)*',

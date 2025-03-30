@@ -19,12 +19,36 @@ import { ChevronsUpDown, Plus, Kanban } from 'lucide-vue-next'
 import { ref } from 'vue'
 import AppIcon from '@/components/icons/AppIcon.vue'
 
-const props = defineProps({
-  teams: { type: Array, required: true },
-})
+const teams = [
+  {
+    name: 'Personal Workspace',
+    plan: 'Laravel',
+    gradient: null,
+  },
+  {
+    name: 'Acme Inc',
+    plan: 'Enterprise',
+    gradient: 2,
+  },
+  {
+    name: 'Foo Inc',
+    plan: 'Enterprise',
+    gradient: 3,
+  },
+  {
+    name: 'Acme Corp.',
+    plan: 'Startup',
+    gradient: 4,
+  },
+  {
+    name: 'Evil Corp.',
+    plan: 'Free',
+    gradient: 5,
+  },
+]
 
 const { isMobile } = useSidebar()
-const activeTeam = ref(props.teams[0])
+const activeTeam = ref(teams[0])
 </script>
 
 <template>

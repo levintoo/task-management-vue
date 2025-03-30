@@ -1,12 +1,13 @@
 <script setup>
 import { useAuthStore } from '@/stores/useAuthStore.js'
+import AppLayout from '@/views/layouts/AppLayout.vue'
 
 const auth = useAuthStore()
 </script>
 
 <template>
-  <div>
+  <AppLayout>
     <p>Welcome, {{ auth?.user?.name }}</p>
     <h1>This the dashboard page</h1>
-  </div>
+  </AppLayout>
 </template>

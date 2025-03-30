@@ -7,20 +7,12 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar'
 
-import {
-  FileMinus2,
-  CircleEllipsis,
-  Clock,
-  House,
-  ClipboardList,
-  Users,
-  Earth,
-  Layers,
-} from 'lucide-vue-next'
 import TeamSwitcher from '@/components/TeamSwitcher.vue'
 import NavMain from '@/components/NavMain.vue'
 import NavProjects from '@/components/NavProjects.vue'
 import NavUser from '@/components/NavUser.vue'
+import NavAdmin from '@/components/NavAdmin.vue'
+import { useAuthStore } from '@/stores/useAuthStore.js'
 
 const props = defineProps({
   side: { type: String, required: false },
@@ -29,89 +21,18 @@ const props = defineProps({
   class: { type: null, required: false },
 })
 
-const data = {
-  teams: [
-    {
-      name: 'Personal Workspace',
-      plan: 'Laravel',
-      gradient: null,
-    },
-    {
-      name: 'Acme Inc',
-      plan: 'Enterprise',
-      gradient: 2,
-    },
-    {
-      name: 'Foo Inc',
-      plan: 'Enterprise',
-      gradient: 3,
-    },
-    {
-      name: 'Acme Corp.',
-      plan: 'Startup',
-      gradient: 4,
-    },
-    {
-      name: 'Evil Corp.',
-      plan: 'Free',
-      gradient: 5,
-    },
-  ],
-  navMain: [
-    {
-      title: 'Docs',
-      url: '#',
-      icon: FileMinus2,
-    },
-    {
-      title: 'Dashboard',
-      url: '#',
-      icon: House,
-    },
-    {
-      title: 'Snapshots',
-      url: '#',
-      icon: Clock,
-    },
-    {
-      title: 'Clips',
-      url: '#',
-      icon: Layers,
-    },
-    {
-      title: 'More',
-      url: '#',
-      icon: CircleEllipsis,
-    },
-  ],
-  projects: [
-    {
-      name: 'Everything',
-      url: '#',
-      icon: Earth,
-    },
-    {
-      name: 'Team Space',
-      url: '#',
-      icon: Users,
-    },
-    {
-      name: 'Product Requirements',
-      url: '#',
-      icon: ClipboardList,
-    },
-  ],
-}
+const auth = useAuthStore()
 </script>
 
 <template>
   <Sidebar v-bind="props">
     <SidebarHeader>
-      <TeamSwitcher :teams="data.teams" />
+      <TeamSwitcher />
     </SidebarHeader>
     <SidebarContent>
-      <NavMain :items="data.navMain" />
-      <NavProjects class="flex-1" :projects="data.projects" />
+      <NavMain />
+      <NavAdmin v-if="auth.isAdmin" />
+      <NavProjects class="flex-1" />
     </SidebarContent>
     <SidebarFooter>
       <NavUser />

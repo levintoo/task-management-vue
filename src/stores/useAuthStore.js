@@ -3,13 +3,17 @@ import axios from '@/lib/axios.js'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: [],
+    user: {},
   }),
 
   getters: {
-    isAuthenticated: (state) => !!state.user,
-    isAdmin: (state) => state.user.role === 'ADMIN',
+    isAuthenticated: (state) => !!state?.user,
+    isAdmin: (state) => state?.user?.role === 'ADMIN',
     initials: (state) => {
+      if (!state?.user || typeof state.user !== 'object' || !state.user?.name?.trim()) {
+        return ''
+      }
+
       const parts = state.user.name.trim().split(/\s+/)
       const first = parts[0]?.charAt(0) || ''
       const second = parts.length > 1 ? parts[1].charAt(0) : parts[0]?.charAt(1) || ''
@@ -35,7 +39,7 @@ export const useAuthStore = defineStore('auth', {
 
     async logout() {
       const response = await axios.post('/logout')
-      this.user = null
+      this.user = {}
       return response
     },
   },

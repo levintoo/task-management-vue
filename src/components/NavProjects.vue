@@ -16,11 +16,36 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { Folder, Forward, MoreHorizontal, Trash2 } from 'lucide-vue-next'
+import {
+  ClipboardList,
+  Earth,
+  Folder,
+  Forward,
+  MoreHorizontal,
+  Trash2,
+  Users,
+} from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
 
-defineProps({
-  projects: { type: Array, required: true },
-})
+const route = useRoute()
+
+const projects = [
+  {
+    name: 'Everything',
+    url: '#',
+    icon: Earth,
+  },
+  {
+    name: 'Team Space',
+    url: '#',
+    icon: Users,
+  },
+  {
+    name: 'Product Requirements',
+    url: '#',
+    icon: ClipboardList,
+  },
+]
 
 const { isMobile } = useSidebar()
 </script>
@@ -30,11 +55,11 @@ const { isMobile } = useSidebar()
     <SidebarGroupLabel>Your Boards</SidebarGroupLabel>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in projects" :key="item.name">
-        <SidebarMenuButton as-child :tooltip="item.name">
-          <a :href="item.url">
+        <SidebarMenuButton :is-active="route.name === item.url.name" as-child :tooltip="item.name">
+          <RouterLink :to="item.url">
             <component :is="item.icon" />
             <span>{{ item.name }}</span>
-          </a>
+          </RouterLink>
         </SidebarMenuButton>
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
