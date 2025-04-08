@@ -17,8 +17,8 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut } from 'lucide-vue-next'
-import { useAuthStore } from '@/stores/useAuthStore.js'
 import router from '@/router/index.js'
+import { useAuthStore } from '@/stores/useAuthStore.js'
 
 const auth = useAuthStore()
 

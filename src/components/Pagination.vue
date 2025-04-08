@@ -22,19 +22,21 @@ const navigate = (link) => {
 <template>
   <div
     v-if="links.length > 3"
-    class="flex items-center justify-between border-t border-slate-200 bg-gray-50 px-4 py-1.5 sm:px-6 border-b"
+    class="flex items-center justify-between bg-gray-50 border-b border-slate-200 px-4 py-1.5 sm:px-6"
   >
     <div class="flex flex-1 justify-between sm:hidden">
-      <a
-        href="#"
+      <button
+        @click="navigate(meta.links[0].url)"
         class="relative inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-        >Previous</a
       >
-      <a
-        href="#"
+        Previous
+      </button>
+      <button
+        @click="navigate(meta.links[meta.links.length - 1].url)"
         class="relative ml-3 inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-        >Next</a
       >
+        Next
+      </button>
     </div>
 
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">

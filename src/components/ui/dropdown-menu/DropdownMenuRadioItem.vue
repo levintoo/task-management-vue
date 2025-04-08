@@ -1,7 +1,7 @@
 <script setup>
 import { cn } from '@/lib/utils.js'
 import { Circle } from 'lucide-vue-next'
-import { DropdownMenuItemIndicator, DropdownMenuRadioItem, useForwardPropsEmits } from 'reka-ui'
+import { DropdownMenuRadioItem, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
 
 const props = defineProps({

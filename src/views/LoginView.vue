@@ -1,10 +1,10 @@
 <script setup>
 import { toast } from 'vue-sonner'
 import { ref } from 'vue'
-import { useAuthStore } from '@/stores/useAuthStore.js'
 import router from '@/router/index.js'
 import { extractErrorMessage } from '@/lib/error-handler.js'
 import GuestLayout from '@/views/layouts/GuestLayout.vue'
+import { useAuthStore } from '@/stores/useAuthStore.js'
 
 const form = ref({
   email: '',
