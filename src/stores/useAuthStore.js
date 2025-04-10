@@ -42,5 +42,35 @@ export const useAuthStore = defineStore('auth', {
       this.user = {}
       return response
     },
+
+    async updateUser({ name, email }) {
+      const response = await axios.patch('/api/profile', {
+        name: name,
+        email: email,
+      })
+      if (response.status === 204) {
+        this.user.name = name
+        this.user.email = email
+      }
+      return response
+    },
+
+    async updatePassword({ password, new_password, new_password_confirmation }) {
+      return await axios.patch('/api/profile', {
+        password: password,
+        new_password: new_password,
+        new_password_confirmation: new_password_confirmation,
+      })
+    },
+
+    async deleteUser(password) {
+      const response = await axios.delete('/api/profile', {
+        data: {
+          password: password,
+        },
+      })
+      this.user = {}
+      return response
+    },
   },
 })

@@ -6,15 +6,31 @@ import { Button } from '@/components/ui/button/index.js'
 import { Label } from '@/components/ui/label/index.js'
 import { Input } from '@/components/ui/input/index.js'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/useAuthStore.js'
+import { toast } from 'vue-sonner'
+import { extractErrorMessage } from '@/lib/error-handler.js'
+import { cleanObject } from '@/lib/clean-object.js'
 
+const store = useAuthStore()
+const validationErrors = ref({})
 const form = ref({
   password: '',
   new_password: '',
-  password_confirmation: '',
+  new_password_confirmation: '',
 })
 
-const submit = () => {
-  console.log(form.value)
+const submit = async () => {
+  try {
+    validationErrors.value = {}
+    await store.updatePassword(form.value)
+    toast.success('Password updated success.')
+  } catch (error) {
+    if (error.status === 422) {
+      validationErrors.value = error.response.data.errors
+    }
+    const message = extractErrorMessage(error)
+    toast.error(message)
+  }
 }
 </script>
 
@@ -59,9 +75,13 @@ const submit = () => {
                 <div class="grid gap-2">
                   <Label for="password">Current password</Label>
                   <Input v-model="form.password" class="mt-1" id="password" type="password" />
-                  <div class="mt-1 hidden">
-                    <p class="text-sm text-red-600 dark:text-red-500">foo</p>
-                  </div>
+                  <p
+                    class="text-red-500 text-sm"
+                    v-for="error in validationErrors['password']"
+                    :key="error"
+                  >
+                    {{ error }}
+                  </p>
                 </div>
                 <div class="grid gap-2">
                   <Label for="new_password">New password</Label>
@@ -71,15 +91,29 @@ const submit = () => {
                     id="new_password"
                     type="password"
                   />
+                  <p
+                    class="text-red-500 text-sm"
+                    v-for="error in validationErrors['new_password']"
+                    :key="error"
+                  >
+                    {{ error }}
+                  </p>
                 </div>
                 <div class="grid gap-2">
                   <Label for="confirm_password">Confirm password</Label>
                   <Input
-                    v-model="form.password_confirmation"
+                    v-model="form.new_password_confirmation"
                     class="mt-1"
                     id="confirm_password"
                     type="password"
                   />
+                  <p
+                    class="text-red-500 text-sm"
+                    v-for="error in validationErrors['new_password_confirmation']"
+                    :key="error"
+                  >
+                    {{ error }}
+                  </p>
                 </div>
                 <div class="flex items-center gap-4">
                   <Button type="submit">Save</Button>

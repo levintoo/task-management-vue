@@ -1,4 +1,7 @@
 <script setup>
+import { ref } from 'vue'
+import { toast } from 'vue-sonner'
+import { extractErrorMessage } from '@/lib/error-handler.js'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { SidebarTrigger } from '@/components/ui/sidebar/index.js'
 import { Label } from '@/components/ui/label/index.js'
@@ -6,6 +9,65 @@ import { Input } from '@/components/ui/input/index.js'
 import { Button } from '@/components/ui/button/index.js'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator/index.js'
+import { useAuthStore } from '@/stores/useAuthStore.js'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from '@/components/ui/drawer/index.js'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog/index.js'
+import { createReusableTemplate, useMediaQuery } from '@vueuse/core'
+import router from '@/router/index.js'
+
+const store = useAuthStore()
+// Reuse `form` section
+const [UseTemplate, GridForm] = createReusableTemplate()
+const isDesktop = useMediaQuery('(min-width: 768px)')
+const isOpen = ref(false)
+const form = {
+  name: store?.user?.name ?? '',
+  email: store?.user?.email ?? '',
+}
+const validationErrors = ref({})
+const password = ref('')
+
+const submit = async () => {
+  try {
+    validationErrors.value = {}
+    await store.updateUser(form)
+    toast.success('Profile updated success.')
+  } catch (error) {
+    if (error.status === 422) {
+      validationErrors.value = error.response.data.errors
+    }
+    const message = extractErrorMessage(error)
+    toast.error(message)
+  }
+}
+
+const deleteAccount = async () => {
+  try {
+    await store.deleteUser(password.value)
+    toast.success('Profile deleted success.')
+    await router.push({ name: 'login' })
+  } catch (error) {
+    if (error.status === 422) {
+      validationErrors.value = error.response.data.errors
+    }
+    const message = extractErrorMessage(error)
+    toast.error(message)
+  }
+}
 </script>
 
 <template>
@@ -45,20 +107,31 @@ import { Separator } from '@/components/ui/separator/index.js'
                   Update your name and email address
                 </p>
               </header>
-              <form class="space-y-6">
+              <form @submit.prevent="submit" class="space-y-6">
                 <div class="grid gap-2">
                   <Label for="name">Name</Label>
-                  <Input class="mt-1" id="name" type="text" />
-                  <div class="mt-1 hidden">
-                    <p class="text-sm text-red-600 dark:text-red-500">foo</p>
-                  </div>
+                  <Input v-model="form.name" class="mt-1" id="name" type="text" />
+                  <p
+                    class="text-red-500 text-sm"
+                    v-for="error in validationErrors['name']"
+                    :key="error"
+                  >
+                    {{ error }}
+                  </p>
                 </div>
                 <div class="grid gap-2">
                   <Label for="email">Email</Label>
-                  <Input class="mt-1" id="email" type="email" />
+                  <Input v-model="form.email" class="mt-1" id="email" type="email" />
+                  <p
+                    class="text-red-500 text-sm"
+                    v-for="error in validationErrors['email']"
+                    :key="error"
+                  >
+                    {{ error }}
+                  </p>
                 </div>
                 <div class="flex items-center gap-4">
-                  <Button>Save</Button>
+                  <Button type="submit">Save</Button>
                 </div>
               </form>
             </div>
@@ -75,8 +148,73 @@ import { Separator } from '@/components/ui/separator/index.js'
                 <AlertDescription>
                   Please proceed with caution, this cannot be undone.
                 </AlertDescription>
-                <Button class="mt-3" variant="destructive">Delete account</Button>
+                <Button @click="isOpen = !isOpen" class="mt-3" variant="destructive"
+                  >Delete account</Button
+                >
               </Alert>
+
+              <div>
+                <UseTemplate>
+                  <form
+                    @submit.prevent="deleteAccount"
+                    class="grid items-start gap-4 overflow-y-auto px-4 md:px-0.5"
+                  >
+                    <div class="grid gap-2">
+                      <Label class="sr-only" for="password">Password</Label>
+                      <Input
+                        class="mt-0.5"
+                        placeholder="password"
+                        type="password"
+                        id="password"
+                        v-model="password"
+                      />
+                      <p
+                        class="text-red-500 text-sm"
+                        v-for="error in validationErrors['password']"
+                        :key="error"
+                      >
+                        {{ error }}
+                      </p>
+                    </div>
+                    <Button variant="destructive" type="submit" class="w-full md:w-fit">
+                      Delete Account
+                    </Button>
+                  </form>
+                </UseTemplate>
+
+                <Dialog v-if="isDesktop" v-model:open="isOpen">
+                  <DialogContent class="grid-rows-[auto_minmax(0,1fr)_auto] max-h-[90dvh]">
+                    <DialogHeader>
+                      <DialogTitle>Delete Account</DialogTitle>
+                      <DialogDescription>
+                        Once your account is deleted, all of its resources and data will be
+                        permanently deleted. Before deleting your account, please download any data
+                        or information that you wish to retain.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <GridForm />
+                  </DialogContent>
+                </Dialog>
+
+                <Drawer v-else v-model:open="isOpen">
+                  <DrawerContent>
+                    <DrawerHeader class="text-left">
+                      <DrawerTitle>Delete Account</DrawerTitle>
+                      <DrawerDescription>
+                        Once your account is deleted, all of its resources and data will be
+                        permanently deleted. Before deleting your account, please download any data
+                        or information that you wish to retain.
+                      </DrawerDescription>
+                    </DrawerHeader>
+                    <GridForm />
+                    <DrawerFooter class="pt-2">
+                      <DrawerClose as-child>
+                        <Button variant="outline"> Cancel </Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </div>
             </div>
           </section>
         </div>
