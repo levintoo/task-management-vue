@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu/index.js'
 import { Button } from '@/components/ui/button/index.js'
-import AppLayout from '@/views/layouts/AppLayout.vue'
+import AppLayout from '@/layouts/AppLayout.vue'
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from '@/views/layouts/AppLayout.vue'
+import AppLayout from '@/layouts/AppLayout.vue'
 import { SidebarTrigger } from '@/components/ui/sidebar/index.js'
 import { DollarSign } from 'lucide-vue-next'
 import { onBeforeMount, ref } from 'vue'

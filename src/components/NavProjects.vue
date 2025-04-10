@@ -3,7 +3,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
@@ -16,15 +15,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import {
-  ClipboardList,
-  Earth,
-  Folder,
-  Forward,
-  MoreHorizontal,
-  Trash2,
-  Users,
-} from 'lucide-vue-next'
+import { Folder, MoreHorizontal, Trash2 } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -33,17 +24,14 @@ const projects = [
   {
     name: 'Everything',
     url: '#',
-    icon: Earth,
   },
   {
     name: 'Team Space',
     url: '#',
-    icon: Users,
   },
   {
     name: 'Product Requirements',
     url: '#',
-    icon: ClipboardList,
   },
 ]
 
@@ -57,7 +45,6 @@ const { isMobile } = useSidebar()
       <SidebarMenuItem v-for="item in projects" :key="item.name">
         <SidebarMenuButton :is-active="route.name === item.url.name" as-child :tooltip="item.name">
           <RouterLink :to="item.url">
-            <component :is="item.icon" />
             <span>{{ item.name }}</span>
           </RouterLink>
         </SidebarMenuButton>
@@ -75,25 +62,22 @@ const { isMobile } = useSidebar()
           >
             <DropdownMenuItem>
               <Folder class="text-gray-500 dark:text-gray-400" />
-              <span>View Project</span>
+              <span>View Kanban</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Forward class="text-gray-500 dark:text-gray-400" />
-              <span>Share Project</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Trash2 class="text-gray-500 dark:text-gray-400" />
-              <span>Delete Project</span>
+              <span>Delete Kanban</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
       <SidebarMenuItem>
-        <SidebarMenuButton tooltip="More" class="text-sidebar-foreground/70">
-          <MoreHorizontal class="text-sidebar-foreground/70" />
-          <span>More</span>
-        </SidebarMenuButton>
+        <RouterLink to="/boards">
+          <SidebarMenuButton tooltip="More" class="text-sidebar-foreground/70">
+            <MoreHorizontal class="text-sidebar-foreground/70" />
+            <span>More</span>
+          </SidebarMenuButton>
+        </RouterLink>
       </SidebarMenuItem>
     </SidebarMenu>
   </SidebarGroup>

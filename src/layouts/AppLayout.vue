@@ -1,6 +1,6 @@
 <script setup>
 import AppSidebar from '@/components/AppSidebar.vue'
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar/index.js'
 </script>
 
 <template>

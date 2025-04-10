@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut } from 'lucide-vue-next'
+import { User, ChevronsUpDown, Key, LogOut } from 'lucide-vue-next'
 import router from '@/router/index.js'
 import { useAuthStore } from '@/stores/useAuthStore.js'
 
@@ -68,18 +68,12 @@ const { isMobile } = useSidebar()
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <BadgeCheck />
-              Account
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard />
-              Billing
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bell />
-              Notifications
-            </DropdownMenuItem>
+            <RouterLink to="/settings/profile">
+              <DropdownMenuItem>
+                <User />
+                Profile
+              </DropdownMenuItem>
+            </RouterLink>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem @click="logout()">

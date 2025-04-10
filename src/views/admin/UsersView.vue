@@ -5,7 +5,7 @@ import { extractErrorMessage } from '@/lib/error-handler.js'
 import { toast } from 'vue-sonner'
 import { debounce } from 'lodash'
 import { createReusableTemplate, useMediaQuery } from '@vueuse/core'
-import AppLayout from '@/views/layouts/AppLayout.vue'
+import AppLayout from '@/layouts/AppLayout.vue'
 import {
   Plus,
   SlidersHorizontal,

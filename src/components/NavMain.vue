@@ -5,7 +5,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { CircleEllipsis, Clock, FileMinus2, House, Layers } from 'lucide-vue-next'
+import { CircleEllipsis, User, FileMinus2, House } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -22,14 +22,12 @@ const navMain = [
     icon: House,
   },
   {
-    title: 'Snapshots',
-    url: '#',
-    icon: Clock,
-  },
-  {
-    title: 'Clips',
-    url: '#',
-    icon: Layers,
+    title: 'Profile',
+    url: { name: 'settings.profile' },
+    icon: User,
+    get active() {
+      return route.name === this.url.name || route.name === 'settings.password'
+    },
   },
   {
     title: 'More',
@@ -43,7 +41,11 @@ const navMain = [
   <SidebarGroup>
     <SidebarMenu>
       <SidebarMenuItem v-for="item in navMain" :key="item.name">
-        <SidebarMenuButton :is-active="route.name === item.url.name" :tooltip="item.title" as-child>
+        <SidebarMenuButton
+          :is-active="item?.active ? true : route.name === item?.url?.name"
+          :tooltip="item.title"
+          as-child
+        >
           <RouterLink :to="item.url">
             <component :is="item.icon" />
             <span>{{ item.title }}</span>

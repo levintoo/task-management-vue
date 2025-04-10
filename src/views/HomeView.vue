@@ -38,7 +38,7 @@ import { Label } from '@/components/ui/label'
 import { createReusableTemplate, useMediaQuery } from '@vueuse/core'
 import { ref } from 'vue'
 import { User, CreditCard } from 'lucide-vue-next'
-import GuestLayout from '@/views/layouts/GuestLayout.vue'
+import GuestLayout from '@/layouts/GuestLayout.vue'
 
 // Reuse `form` section
 const [UseTemplate, GridForm] = createReusableTemplate()
